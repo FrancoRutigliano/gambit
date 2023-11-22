@@ -51,3 +51,43 @@ func ConnStr(claves models.SecretRDSJson) string {
 
 	return dsn
 }
+
+/*
+	Funcion con la tarea de indicar si es administrador o no
+*/
+
+func UserIsAdmin(UserUUID string) (bool, string) {
+	//Depuracion
+	fmt.Println("Comienza UserIsAdmin")
+	//Nos conectamos a la base de dato mediante el objeto global DB
+	err := DbConnect()
+	//Si hubo algun error se asume que el usuario no es admin y se cierra la DB
+	if err != nil {
+		return false, err.Error()
+	}
+	defer Db.Close()
+
+	sentencia := "SELECT 1 FROM users WHERE User_UUID='" + UserUUID + "' AND User_Status = 0"
+	fmt.Println(sentencia)
+
+	//Utilizamos Query para generar una consulta hacia la base de datos en base a la sentencia escrita arriba
+	rows, err := Db.Query(sentencia)
+	if err != nil {
+		return false, err.Error()
+	}
+	//Caso de que la sentencia sea correcta, ahora a validar si realmente es admin
+
+	var valor string
+	//Posicionamos lo que nos devolvio la sentencia en el primer registro
+	rows.Next()
+	// Estamos extrayendo los valores con el scan y almacenandolos/destino es la VAR valor
+	rows.Scan(&valor)
+
+	fmt.Println("UserIsAdmin > Ejecución Existosa - valor devuelto -> " + valor)
+	//Comprobamos de que realmente sea usuario
+	if valor == "1" {
+		return true, ""
+	}
+
+	return false, "User is not Admin"
+}
