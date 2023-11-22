@@ -1,2 +1,10 @@
-# gambit
-Gambit es una ecomerce desarrollada desde el backend con Golang y desde el Front con React/Next.js 
+# Gambit Ecomerce 💙 
+
+Un proyecto de Ecomerce que se esta realizando con el principal motivo de practicar.
+
+
+## Tech Stack
+
+**Client:** React & Next.js
+
+**Server:** Golang
