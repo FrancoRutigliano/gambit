@@ -19,3 +19,11 @@ type SignUp struct {
 	UserEmail string `json:"UserEmail"`
 	UserUUID  string `json:"UserUUID"`
 }
+
+//Creando la estructura categoria
+
+type Category struct {
+	CategID   int    `json:"categID"`
+	CategName string `json:"categName"`
+	CategPath string `json:"categPath"`
+}
